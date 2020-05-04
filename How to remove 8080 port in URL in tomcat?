@@ -1,0 +1,46 @@
+I have an application deployed on tomcat and to access it, the URL looks like www.example.com:8080/deploy/. 
+
+But I want my application to come up when the user just enters www.example.com
+
+Well, to change the port that Tomcat uses is a simple matter of changing the entry in the server.xml file under conf directory.
+
+ 
+
+For Tomcat 4.0.X the entry looks like
+
+< !-- Define a non-SSL HTTP/1.1 Connector on port 8080 -->
+< Connector className="org.apache.catalina.connector.http.HttpConnector"
+           port="8080" minProcessors="5" maxProcessors="75"
+           enableLookups="true" redirectPort="8443"
+           acceptCount="10" debug="0" connectionTimeout="60000"/>
+ 
+
+And in Tomcat 3.2.X
+
+< !-- Normal HTTP -->
+< Connector className="org.apache.tomcat.service.PoolTcpConnector">
+    <Parameter name="handler"
+        value="org.apache.tomcat.service.http.HttpConnectionHandler"/>
+    <Parameter name="port"
+        value="8080"/>
+< /Connector>
+
+Or
+
+*************************************************
+
+As you can see port: 8080 exist in URL while accessing Tomcat Application. 
+
+The solution to hide the port use Default https port: 443 (please locate file server.xml on the server)
+
+ 
+
+<Connector port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="443" />
+ 
+
+<Connector port="443" protocol="HTTP/1.1" SSLEnabled="true"
+               maxThreads="150" scheme="https" secure="true" keystoreFile="xxxxx" keystorePass="xxxx" keystoreType="xxxx"
+               clientAuth="false" sslProtocol="TLS" />
+*************************************************
