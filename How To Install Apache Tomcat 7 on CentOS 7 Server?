@@ -1,0 +1,62 @@
+Apache Tomcat is an open-source web server for Java application of Apache Foundation like Apache HTTP server. It used for deploying Java Servlet and JSP applications. To deploy an application in Tomcat we can simply create a war file and deploy them. For more details about you can visit the apache official site https://tomcat.apache.org.
+
+In this tutorial, I will show you how to install Tomcat 7 application on CentOS 7.
+
+
+1. Check the installed Java version
+
+$ java -version
+
+2. Install Java 1.7
+
+We will use 1.7 and you can see the procedure as follows:
+
+$ yum install java-1.7.0-openjdk.x86_64
+$ java -version
+
+3. Now you can download Apache Tomcat archive file from Apache tomcat official download page.
+
+You can use the below wget command to download it.
+
+$ cd /tmp
+$ wget http://www-us.apache.org/dist/tomcat/tomcat-7/v7.0.99/bin/apache-tomcat-7.0.99.tar.gz
+
+After competed download extract archive file in /tmp directory and move to the proper location as per your need.
+
+We are uploading our application under /usr/local directory.
+
+$ tar -xzf apache-tomcat-7.0.99.tar.gz
+$ mv apache-tomcat-7.0.99 /usr/local/tomcat7
+
+4. Now you can start Tomcat Server
+
+Tomcat is very easy to use, There is no need to compile its source. You simply extract the archive and start the tomcat server.
+
+Tomcat by default start on port 8080, Make sure no other services are running on the same port using ‘telnet localhost 8080’.
+
+$ cd /usr/local/tomcat7
+$ ./bin/startup.sh
+
+5. Now you can access Tomcat application in Browser
+
+Tomcat server works on port 8080 default. To access Tomcat on the web browser by connecting your server on port 8080.
+
+ http://localhost:8080
+ 
+6. Now you can Setup User Accounts
+
+Finally, we need to create user accounts to secure and access admin/manager pages. Edit conf/tomcat-users.xml file in your editor and paste inside <tomcat-users> </tomcat-users> tags.
+
+<!-- user manager can access only manager section -->
+<role rolename="manager-gui" />
+<user username="manager" password="_SECRET_PASSWORD_" roles="manager-gui" />
+
+<!-- user admin can access manager and admin section both -->
+<role rolename="admin-gui" />
+<user username="admin" password="_SECRET_PASSWORD_" roles="manager-gui,admin-gui" />
+
+7. Let Say if you don't want to use Tomcat application Then you can Stop Tomcat Server
+
+$ ./bin/shutdown.sh
+
+Your installation of Tomcat is complete! You are now free to deploy your own Java web applications!
